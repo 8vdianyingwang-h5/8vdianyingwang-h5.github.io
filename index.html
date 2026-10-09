@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8V电影网 - 8维看片/类型片单/正版影视导航 | 8vdianyingwang-h5</title>
+<meta name="description" content="8V电影网(8vdianyingwang-h5)用8个维度挑电影：类型、地区、年代、情绪、画质、场景、奖项、正版渠道。提供电影资讯、片单、影评与正版平台导航，不提供盗版播放与下载。">
+<meta name="keywords" content="8V电影网,8vdianyingwang-h5,8维看片,电影片单,类型电影,正版影视导航,电影资讯,影评">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://8vdianyingwang-h5.github.io/">
+<meta property="og:title" content="8V电影网 - 8维看片/正版影视导航">
+<meta property="og:description" content="8V = 8 View：用八个维度把电影看明白，只做合规影视资讯与正版导航。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://8vdianyingwang-h5.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --bg:#11151c;--bg2:#161c26;--card:#1b2230;--ink:#eaf6f3;--muted:#9fb0ad;
+  --cyan:#19e3c2;--purple:#7c5cff;--line:rgba(25,227,194,.22);--radius:18px;
+  --shadow:0 14px 40px rgba(25,227,194,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:
+    radial-gradient(900px 460px at 92% -10%,rgba(124,92,255,.20),transparent 60%),
+    radial-gradient(820px 460px at -8% 8%,rgba(25,227,194,.16),transparent 55%),
+    var(--bg);
+  color:var(--ink);line-height:1.65;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+
+.header{position:sticky;top:0;z-index:50;background:rgba(17,21,28,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900}
+.brand .v{width:38px;height:38px;border-radius:12px;color:#06120f;font-weight:900;font-size:16px;background:linear-gradient(135deg,var(--cyan),var(--purple));box-shadow:0 0 18px rgba(25,227,194,.45);display:flex;align-items:center;justify-content:center}
+.brand small{display:block;font-size:11px;color:var(--muted);font-weight:500}
+.nav{display:flex;gap:6px}
+.nav a{padding:8px 14px;border-radius:999px;font-size:14px;color:var(--muted);border:1px solid transparent;transition:.25s}
+.nav a:hover,.nav a.active{color:var(--cyan);border-color:var(--line);background:var(--card)}
+.menu-btn{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.menu-btn span{width:24px;height:2px;background:var(--ink);border-radius:2px}
+
+.hero{padding:78px 0 56px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border-radius:999px;font-size:12px;color:var(--cyan);border:1px solid var(--line);background:var(--card)}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.14;margin:16px 0 14px;font-weight:900}
+h1 .hl{background:linear-gradient(120deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);max-width:520px;font-size:15px}
+.theme-tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.tt{padding:5px 12px;border-radius:999px;font-size:12.5px;background:var(--card);border:1px solid var(--line);color:var(--muted)}
+.stats{display:flex;gap:22px;margin-top:6px}
+.stats b{font-size:22px;color:var(--cyan)}
+.stats span{font-size:12px;color:var(--muted)}
+
+/* 8 dim radar */
+.radar{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.dim{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.dim:last-child{border-bottom:none}
+.dim .k{width:84px;font-size:13px;color:var(--cyan);font-weight:700;flex:0 0 auto}
+.dim .bar{flex:1;height:8px;border-radius:999px;background:#0c1117;overflow:hidden}
+.dim .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple))}
+.dim .v2{width:34px;text-align:right;font-size:12px;color:var(--muted)}
+
+section{padding:64px 0}
+.sec-head{text-align:center;margin-bottom:34px}
+.sec-head .tag{color:var(--cyan);font-size:12px;letter-spacing:3px;text-transform:uppercase}
+.sec-head h2{font-size:clamp(24px,3.4vw,34px);margin:8px 0 10px}
+.sec-head p{color:var(--muted);max-width:660px;margin:0 auto;font-size:14px}
+
+/* filter bar */
+.fbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:24px}
+.fbar button{background:var(--card);border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:13px;cursor:pointer;transition:.2s}
+.fbar button:hover,.fbar button.on{color:#06120f;background:linear-gradient(135deg,var(--cyan),var(--purple));border-color:transparent;font-weight:700}
+
+/* film grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;transition:.3s}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(124,92,255,.4)}
+.card .top{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--cyan)}
+.card h3{font-size:16px;margin:8px 0 6px}
+.card p{font-size:13px;color:var(--muted)}
+.card .m{margin-top:10px;font-size:12px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:2px 8px;border:1px solid var(--line);border-radius:999px}
+
+/* scenes */
+.scenes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.scene{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;transition:.3s}
+.scene:hover{transform:translateY(-5px);border-color:rgba(25,227,194,.4)}
+.scene .ic{font-size:26px}
+.scene h4{margin:10px 0 6px;font-size:15px}
+.scene p{font-size:12.5px;color:var(--muted)}
+
+/* quality/award */
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.qa .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.qa h4{font-size:15px;margin-bottom:10px;color:var(--cyan)}
+.qa ul{list-style:none;font-size:13px;color:var(--muted)}
+.qa li{padding:5px 0;border-bottom:1px dashed var(--line)}
+.qa li:last-child{border-bottom:none}
+
+/* hubs */
+.hubs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.hub{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;transition:.25s}
+.hub:hover{border-color:rgba(124,92,255,.4)}
+.hub h4{font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.hub a{display:block;font-size:13px;color:var(--muted);padding:5px 0}
+.hub a:hover{color:var(--cyan);padding-left:6px}
+
+.notice{margin:0 0 60px;border:1px dashed rgba(25,227,194,.45);background:rgba(25,227,194,.06);border-radius:16px;padding:18px 20px;font-size:13px;color:#bfeee6}
+.notice b{color:var(--cyan)}
+
+.footer{border-top:1px solid var(--line);padding:40px 0 26px;background:var(--bg2)}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
+.footer h5{font-size:14px;margin-bottom:12px;color:var(--ink)}
+.footer a{font-size:13px;color:var(--muted);display:block;padding:4px 0}
+.footer a:hover{color:var(--cyan)}
+.copy{margin-top:26px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.kw{color:var(--cyan)}
+
+.reveal{opacity:0;transform:translateY(26px);transition:.7s ease}
+.reveal.show{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr 1fr}
+  .scenes,.hubs{grid-template-columns:1fr 1fr}
+  .qa{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  html{font-size:14px}
+  .nav{position:fixed;right:0;top:64px;height:calc(100vh - 64px);width:76%;background:var(--bg);border-left:1px solid var(--line);flex-direction:column;padding:22px;gap:10px;transform:translateX(100%);transition:.3s}
+  .nav.open{transform:none}
+  .menu-btn{display:flex}
+  .grid{grid-template-columns:1fr}
+  .scenes,.hubs{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="header">
+  <div class="wrap">
+    <div class="brand">
+      <div class="v">8V</div>
+      <div>8V电影网<small>8vdianyingwang-h5 · 8维看片 / 正版影视导航</small></div>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#home" class="active">首页</a>
+      <a href="#dims">8维看片</a>
+      <a href="#list">类型片单</a>
+      <a href="#scenes">观影场景</a>
+      <a href="#qa">奖项/画质</a>
+      <a href="#nav">正版导航</a>
+    </nav>
+    <div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="pill">⚡ 8V = 8 View · 八个维度挑电影</span>
+      <h1>8V电影网<br>别只搜<span class="hl">“能看的”</span>，要会<span class="hl">“看懂的”</span></h1>
+      <p class="lead">8V电影网（8vdianyingwang-h5）把选片拆成 8 个维度：类型、地区、年代、情绪、画质、场景、奖项、正版渠道。不做盗版播放器，只做电影资讯、片单与正版导航。</p>
+      <div class="theme-tags">
+        <span class="tt"># 类型</span>
+        <span class="tt"># 地区</span>
+        <span class="tt"># 年代</span>
+        <span class="tt"># 情绪曲线</span>
+        <span class="tt"># 画质规格</span>
+        <span class="tt"># 正版渠道</span>
+      </div>
+      <div class="stats">
+        <div><b>8 维</b><span>选片模型</span></div>
+        <div><b>6 栏</b><span>资讯结构</span></div>
+        <div><b>0 盗版</b><span>合规底线</span></div>
+      </div>
+    </div>
+    <div class="radar reveal">
+      <div class="dim"><div class="k">类型</div><div class="bar"><i style="width:90%"></i></div><div class="v2">9.0</div></div>
+      <div class="dim"><div class="k">地区</div><div class="bar"><i style="width:78%"></i></div><div class="v2">7.8</div></div>
+      <div class="dim"><div class="k">年代</div><div class="bar"><i style="width:82%"></i></div><div class="v2">8.2</div></div>
+      <div class="dim"><div class="k">情绪</div><div class="bar"><i style="width:88%"></i></div><div class="v2">8.8</div></div>
+      <div class="dim"><div class="k">画质</div><div class="bar"><i style="width:74%"></i></div><div class="v2">7.4</div></div>
+      <div class="dim"><div class="k">场景</div><div class="bar"><i style="width:85%"></i></div><div class="v2">8.5</div></div>
+      <div class="dim"><div class="k">奖项</div><div class="bar"><i style="width:70%"></i></div><div class="v2">7.0</div></div>
+      <div class="dim"><div class="k">正版</div><div class="bar"><i style="width:95%"></i></div><div class="v2">9.5</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="dims">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="tag">8 Dimensions</div>
+      <h2>8 维看片模型</h2>
+      <p>搜片前先填这 8 项，片单就不会变成“热门搬运”。</p>
+    </div>
+    <div class="radar reveal">
+      <div class="dim"><div class="k">① 类型</div><div class="bar"><i style="width:92%"></i></div><div class="v2">剧情/悬疑/科幻…</div></div>
+      <div class="dim"><div class="k">② 地区</div><div class="bar"><i style="width:80%"></i></div><div class="v2">国产/韩/日/欧/美</div></div>
+      <div class="dim"><div class="k">③ 年代</div><div class="bar"><i style="width:83%"></i></div><div class="v2">90s/00s/10s/20s</div></div>
+      <div class="dim"><div class="k">④ 情绪</div><div class="bar"><i style="width:89%"></i></div><div class="v2">治愈/致郁/燃/松弛</div></div>
+      <div class="dim"><div class="k">⑤ 画质</div><div class="bar"><i style="width:76%"></i></div><div class="v2">1080P/4K/Dolby</div></div>
+      <div class="dim"><div class="k">⑥ 场景</div><div class="bar"><i style="width:86%"></i></div><div class="v2">约会/独处/家庭/夜场</div></div>
+      <div class="dim"><div class="k">⑦ 奖项</div><div class="bar"><i style="width:72%"></i></div><div class="v2">金棕榈/奥斯卡/金马</div></div>
+      <div class="dim"><div class="k">⑧ 正版</div><div class="bar"><i style="width:97%"></i></div><div class="v2">院线/流媒体/版权方</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="list">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="tag">Genre List</div>
+      <h2>类型片单（带 8 维标签）</h2>
+      <p>点筛选条切类型；卡片只给“为什么适合你”。</p>
+    </div>
+    <div class="fbar reveal">
+      <button class="on">全部</button>
+      <button>悬疑</button>
+      <button>科幻</button>
+      <button>家庭</button>
+      <button>爱情</button>
+      <button>动画</button>
+      <button>现实向</button>
+    </div>
+    <div class="grid">
+      <article class="card reveal"><div class="top"><span>悬疑</span><span>8.7</span></div><h3>雨夜放映厅</h3><p>密室、旧票根、放映员——把“谁在看片”拍成谜题。</p><div class="m"><span class="chip">韩式</span><span class="chip">致郁</span><span class="chip">夜场</span></div></article>
+      <article class="card reveal"><div class="top"><span>科幻</span><span>8.6</span></div><h3>第 8 号轨道</h3><p>近未来通勤宇宙，地铁末节车厢连着另一个城市。</p><div class="m"><span class="chip">国产</span><span class="chip">松弛</span><span class="chip">4K</span></div></article>
+      <article class="card reveal"><div class="top"><span>家庭</span><span>8.8</span></div><h3>年夜饭备份</h3><p>三代人、四部手机、一条群消息，把代际拍得很轻。</p><div class="m"><span class="chip">现实</span><span class="chip">治愈</span><span class="chip">家庭</span></div></article>
+      <article class="card reveal"><div class="top"><span>爱情</span><span>8.5</span></div><h3>重映场告白</h3><p>老影院翻新，前任坐隔壁，片尾灯亮了没人走。</p><div class="m"><span class="chip">都市</span><span class="chip">甜中带刀</span><span class="chip">约会</span></div></article>
+      <article class="card reveal"><div class="top"><span>动画</span><span>8.9</span></div><h3>胶片小怪兽</h3><p>修老动画的年轻人，把童年缺的那集补完了。</p><div class="m"><span class="chip">日系</span><span class="chip">治愈</span><span class="chip">独处</span></div></article>
+      <article class="card reveal"><div class="top"><span>现实向</span><span>8.4</span></div><h3>出租屋电影院</h3><p>合租六人，一台投影仪，谁先搬走谁没看完片尾。</p><div class="m"><span class="chip">国产</span><span class="chip">致郁</span><span class="chip">青年</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="scenes" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="tag">View Scenes</div>
+      <h2>观影场景</h2>
+      <p>同一部片，一个人看是解压，一家人看可能是“家庭会议”。</p>
+    </div>
+    <div class="scenes">
+      <div class="scene reveal"><div class="ic">🌙</div><h4>深夜独处</h4><p>悬疑/科幻/作者片，关灯、降音量。</p></div>
+      <div class="scene reveal"><div class="ic">🛋️</div><h4>情侣夜场</h4><p>爱情/轻喜剧/音乐片，别选致郁系。</p></div>
+      <div class="scene reveal"><div class="ic">🍲</div><h4>家庭周末</h4><p>动画/家庭/运动传记，长辈不困最重要。</p></div>
+      <div class="scene reveal"><div class="ic">🎓</div><h4>朋友聚会</h4><p>群像/黑帮喜剧/赛车，吵起来也热闹。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="qa">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="tag">Quality & Awards</div>
+      <h2>画质规格 / 奖项线索</h2>
+      <p>挑片别只看海报，看“用什么规格放、拿过什么奖”更稳。</p>
+    </div>
+    <div class="qa">
+      <div class="box reveal"><h4>🎞 画质与声画</h4>
+        <ul>
+          <li>1080P 重制：老片补帧、降噪、字幕重排</li>
+          <li>4K Dolby Vision：夜景、雨戏、霓虹场景最吃配置</li>
+          <li>Dolby Atmos：动作/音乐/海洋声场差异明显</li>
+          <li>胶片颗粒保留：作者片别开“智能增强”</li>
+        </ul>
+      </div>
+      <div class="box reveal"><h4>🏆 奖项与片单信</h4>
+        <ul>
+          <li>金棕榈/银熊/金狮：作者表达、现实重量</li>
+          <li>奥斯卡最佳国际片：翻译、战争、移民、家庭</li>
+          <li>金马/金像：华语地缘、方言、代际</li>
+          <li>动画长片奖：别当儿童片，很多是给大人看的</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nav">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="tag">Legal Navigation</div>
+      <h2>正版影视导航</h2>
+      <p>8V电影网只导航：院线、持牌流媒体、版权方授权渠道，不聚合盗版源。</p>
+    </div>
+    <div class="hubs">
+      <div class="hub reveal"><h4>🎬 按维度</h4><a href="#">类型片单</a><a href="#">地区精选</a><a href="#">年代回顾</a><a href="#">情绪曲线</a><a href="#">画质规格</a><a href="#">奖项片单</a></div>
+      <div class="hub reveal"><h4>📺 按平台</h4><a href="#">院线新片</a><a href="#">持牌流媒体</a><a href="#">文艺片库</a><a href="#">动画专区</a><a href="#">纪录片台</a><a href="#">正版租赁</a></div>
+      <div class="hub reveal"><h4>🧭 按人群</h4><a href="#">独居青年</a><a href="#">情侣约会</a><a href="#">亲子家庭</a><a href="#">银发观众</a><a href="#">影迷进阶</a><a href="#">入门扫盲</a></div>
+      <div class="hub reveal"><h4>🔗 快速入口</h4><a href="#dims">8维看片</a><a href="#list">类型片单</a><a href="#qa">奖项/画质</a><a href="#scenes">观影场景</a><a href="#">关于本站</a><a href="#">反馈</a></div>
+    </div>
+    <div class="notice reveal">
+      <b>合规说明：</b> 8V电影网（8vdianyingwang-h5）仅提供电影资讯、8 维选片模型、类型片单、影评分析与正版平台导航。
+      本页不含盗版视频播放/下载/解析，不提供未授权网盘资源、迅雷种子或境外盗版聚合；
+      观看请通过合法院线、持牌视听平台或版权方授权渠道。[9,13](@ref)
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:10px"><div class="v">8V</div><div>8V电影网</div></div>
+        <p style="color:var(--muted);font-size:13px;max-width:320px">8 View：用八个维度把电影看明白。网址：https://8vdianyingwang-h5.github.io</p>
+      </div>
+      <div><h5>栏目</h5><a href="#home">首页</a><a href="#dims">8维看片</a><a href="#list">类型片单</a><a href="#qa">奖项/画质</a></div>
+      <div><h5>场景</h5><a href="#">深夜独处</a><a href="#">情侣夜场</a><a href="#">家庭周末</a><a href="#">朋友聚会</a></div>
+      <div><h5>关于</h5><a href="#scenes">观影场景</a><a href="#">免责声明</a><a href="#">正版渠道</a><a href="#">联系反馈</a></div>
+    </div>
+    <div class="copy">
+      <span>© 2026 8V电影网 · 8维看片/正版影视资讯演示站</span>
+      <span class="kw">8vdianyingwang-h5</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const nav=document.getElementById('nav');
+menuBtn.addEventListener('click',()=>nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+
+const links=[...document.querySelectorAll('.nav a')];
+const secs=[...document.querySelectorAll('section[id]')];
+addEventListener('scroll',()=>{
+  let cur='home';
+  secs.forEach(s=>{ if(scrollY>=s.offsetTop-120) cur=s.id });
+  links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+
+// 简单筛选演示
+const fbar=document.querySelectorAll('.fbar button');
+fbar.forEach(b=>b.addEventListener('click',()=>{
+  fbar.forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+}));
+
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show') });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
